@@ -1,13 +1,6 @@
 import os
-from dotenv import load_dotenv
-
-# Load environment variables from a .env file
-load_dotenv()
 
 class Config:
-    SQLALCHEMY_DATABASE_URI = os.getenv(
-        "DATABASE_URI",
-        "postgresql://mohaa:password4127@localhost:5432/late_show_db"
-    )
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'postgresql://osman:7545800@localhost/late_show_db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "your-secret-key")
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY') or 'super-secret'

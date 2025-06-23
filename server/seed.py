@@ -1,29 +1,48 @@
-from app import create_app
-from models import db
-from models.guest import Guest
-from models.episode import Episode
+from flask_bcrypt import Bcrypt
 from datetime import date
+from server.app import create_app
+from server.models import db
+from server.models.user import User
+from server.models.guest import Guest
+from server.models.episode import Episode
+from server.models.appearance import Appearance
 
+bcrypt = Bcrypt()
 app = create_app()
-app.app_context().push()
 
-# Initialize the db object with the app instance
-db.init_app(app)
-
-# Delete existing data if necessary
 with app.app_context():
+    print("Seeding database...")
+
     db.drop_all()
     db.create_all()
 
-# Create sample guests
-guest1 = Guest(name="Morgan", occupation="Comedian")
-guest2 = Guest(name="Alex", occupation="Musician")
+   
+    password_hash = bcrypt.generate_password_hash('admin123').decode('utf-8')
+    user1 = User(username="admin", password_hash=password_hash)
 
-# Create sample episodes
-episode1 = Episode(date=date(2025, 6, 20), number=1)
-episode2 = Episode(date=date(2025, 6, 27), number=2)
+   
+    guest1 = Guest(name="Osman Fahiye", occupation="Comedian")
+    guest2 = Guest(name="Ali", occupation="Developer")
+    guest3 = Guest(name="Julius", occupation="Mentor")
 
-db.session.add_all([guest1, guest2, episode1, episode2])
-db.session.commit()
+ 
+    ep1 = Episode(date=date(2023, 9, 1), number=101)
+    ep2 = Episode(date=date(2023, 9, 2), number=102)
+    ep3 = Episode(date=date(2023, 9, 3), number=103)
 
-print("Seed data inserted.")
+
+    app1 = Appearance(rating=5, guest=guest1, episode=ep1)
+    app2 = Appearance(rating=4, guest=guest2, episode=ep1)
+    app3 = Appearance(rating=5, guest=guest3, episode=ep2)
+    app4 = Appearance(rating=3, guest=guest2, episode=ep3)
+
+  
+    db.session.add_all([
+        user1,
+        guest1, guest2, guest3,
+        ep1, ep2, ep3,
+        app1, app2, app3, app4
+    ])
+    db.session.commit()
+
+    print("Seeding complete!")
