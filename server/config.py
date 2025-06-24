@@ -1,7 +1,7 @@
 import os
 
 # PostgreSQL connection URI
-DATABASE_URI = "postgresql://postgres:3690@localhost:5432/late_show_db"
+DATABASE_URI = "postgresql://postgres:passward4127@localhost:5432/late_show_db"
 
 
 class Config:
