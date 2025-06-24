@@ -1,48 +1,24 @@
-from flask_bcrypt import Bcrypt
-from datetime import date
-from server.app import create_app
-from server.models import db
-from server.models.user import User
-from server.models.guest import Guest
+from server.extensions import db
 from server.models.episode import Episode
-from server.models.appearance import Appearance
+from server.models.guest import Guest
 
-bcrypt = Bcrypt()
-app = create_app()
+def seed_data():
+    # Add Guests
+    guest1 = Guest(name="Stephen King", occupation="Author")
+    guest2 = Guest(name="Taylor Swift", occupation="Musician")
+    guest3 = Guest(name="Serena Williams", occupation="Athlete")
 
-with app.app_context():
-    print("Seeding database...")
+    # Add Episodes
+    episode1 = Episode(date="2025-06-01", number=1)
+    episode2 = Episode(date="2025-06-02", number=2)
+    episode3 = Episode(date="2025-06-03", number=3)
 
-    db.drop_all()
-    db.create_all()
-
-   
-    password_hash = bcrypt.generate_password_hash('admin123').decode('utf-8')
-    user1 = User(username="admin", password_hash=password_hash)
-
-   
-    guest1 = Guest(name="Osman Fahiye", occupation="Comedian")
-    guest2 = Guest(name="Ali", occupation="Developer")
-    guest3 = Guest(name="Julius", occupation="Mentor")
-
- 
-    ep1 = Episode(date=date(2023, 9, 1), number=101)
-    ep2 = Episode(date=date(2023, 9, 2), number=102)
-    ep3 = Episode(date=date(2023, 9, 3), number=103)
-
-
-    app1 = Appearance(rating=5, guest=guest1, episode=ep1)
-    app2 = Appearance(rating=4, guest=guest2, episode=ep1)
-    app3 = Appearance(rating=5, guest=guest3, episode=ep2)
-    app4 = Appearance(rating=3, guest=guest2, episode=ep3)
-
-  
-    db.session.add_all([
-        user1,
-        guest1, guest2, guest3,
-        ep1, ep2, ep3,
-        app1, app2, app3, app4
-    ])
+    db.session.add_all([guest1, guest2, guest3, episode1, episode2, episode3])
     db.session.commit()
+    print("Seeded guests and episodes.")
 
-    print("Seeding complete!")
+if __name__ == "__main__":
+    from server.app import create_app
+    app = create_app()
+    with app.app_context():
+        seed_data()
