@@ -1,5 +1,4 @@
 # SA-Phase-4-Code-Challenge-Two-Late-Show-API
-# Late Show API
 
 A Flask REST API for managing late-night show episodes, guest appearances, and user authentication. Built with PostgreSQL, Flask-JWT-Extended, and Flask-SQLAlchemy.
 
@@ -52,8 +51,8 @@ Edit
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/your-username/late-show-api-challenge.git
-cd late-show-api-challenge
+git clone: https://github.com/Mohamed-Abass2287/SA-Phase-4-Code-Challenge-Two-Late-Show-API
+cd SA-Phase-4-Code-Challenge-Two-Late-Show-API
 2. Install Dependencies
 bash
 Copy
