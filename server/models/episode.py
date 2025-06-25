@@ -1,4 +1,6 @@
 from server.extensions import db
+from server.models.guest import Guest
+
 
 class Guest(db.Model):
     __tablename__ = 'guests'
